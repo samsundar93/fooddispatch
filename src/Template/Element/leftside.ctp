@@ -13,13 +13,13 @@
             </a>
         </li>
         <li class="<?php echo ($controller == 'Orders') ? 'active' : '' ?>">
-            <a href="./table.html">
+            <a href="<?php echo DISPATCH_URL ?>orders">
                 <i class="material-icons">content_paste</i>
                 <p>Orders</p>
             </a>
         </li>
         <li class="<?php echo ($controller == 'Drivers') ? 'active' : '' ?>">
-            <a href="./typography.html">
+            <a href="<?php echo DISPATCH_URL ?>drivers">
                 <i class="material-icons">account_box</i>
                 <p>Drivers</p>
             </a>

@@ -19,16 +19,17 @@
                 <div class="col-md-10">
                     <div class="card">
                         <div class="card-content">
-                            <?= $this->Form->create('siteForm',[
-                                'id' => 'siteForm',
-                                'name' => 'siteForm',
+                            <?= $this->Form->create('DrvierForm',[
+                                'id' => 'DrvierForm',
+                                'name' => 'DrvierForm',
                                 'enctype'  =>'multipart/form-data'
                             ])?>
+                            <input type="hidden" value="<?php echo $id; ?>" name="id" id="editId">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Site Name</label>
-                                        <input id="sitename" name="sitename" type="text" class="form-control" value="<?php echo $siteSettings['sitename'] ?>">
+                                        <label class="control-label">Fist Name</label>
+                                        <input id="firstname" name="firstname" type="text" class="form-control" value="<?php echo $driverDetails['firstname'] ?>">
                                     </div>
                                     <span id="firstErr"></span>
                                 </div>
@@ -37,8 +38,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Contact Email</label>
-                                        <input id="contact_email" name="contact_email" type="text" class="form-control" value="<?php echo $siteSettings['contact_email'] ?>">
+                                        <label class="control-label">Last Name</label>
+                                        <input id="lastname" name="lastname" type="text" class="form-control" value="<?php echo $driverDetails['lastname'] ?>">
                                     </div>
                                     <span id="lastErr"></span>
                                 </div>
@@ -46,8 +47,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Contact Phonenumber</label>
-                                        <input id="contact_phone" name="contact_phone" type="text" class="form-control" value="<?php echo $siteSettings['contact_phone'] ?>">
+                                        <label class="control-label">Email</label>
+                                        <input id="email" name="email" type="text" class="form-control" value="<?php echo $driverDetails['email'] ?>">
                                     </div>
                                     <span id="emailErr"></span>
                                 </div>
@@ -57,13 +58,22 @@
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Address</label>
-                                        <input id="address" name="address" type="text" class="form-control" placeholder="" value="<?php echo $siteSettings['address'] ?>">
+                                        <input id="address" name="address" type="text" class="form-control" placeholder="" value="<?php echo $driverDetails['address'] ?>">
                                     </div>
                                     <span id="addressErr"></span>
                                 </div>
                             </div>
 
-                            <button type="submit" onclick="return siteSettings()" class="btn btn-primary pull-right">SUBMIT</button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Phone Number</label>
+                                        <input id="phonenumber" name="phone_number" type="text" class="form-control" value="<?php echo $driverDetails['phone_number'] ?>">
+                                    </div>
+                                    <span id="phoneErr"></span>
+                                </div>
+                            </div>
+                            <button type="submit" onclick="return addDriver()" class="btn btn-primary pull-right">EDIT</button>
                             <div class="clearfix"></div>
                             <?=  $this->Form->end(); ?>
                         </div>
@@ -75,42 +85,64 @@
 </div>
 
 <script>
-    function siteSettings() {
+    function addDriver() {
         $(".error").html('');
-        var sitename = $("#sitename").val();
-        var contact_email = $("#contact_email").val();
-        var contact_phone = $("#contact_phone").val();
+        var editId = $("#editId").val();
+        var firstname = $("#firstname").val();
+        var lastname = $("#lastname").val();
+        var email = $("#email").val();
         var address = $("#address").val();
+        var phone_number = $("#phonenumber").val();
 
-        if(sitename == '') {
-            $("#firstErr").addClass('error').html('Please enter site name');
-            $("#sitename").focus();
+        if(firstname == '') {
+            $("#firstErr").addClass('error').html('Please enter driver first name');
+            $("#firstname").focus();
             return false;
 
-        }else if(contact_email == '') {
-            $("#lastErr").addClass('error').html('Please enter contact email');
-            $("#contact_email").focus();
+        }else if(lastname == '') {
+            $("#lastErr").addClass('error').html('Please enter driver lastname');
+            $("#lastname").focus();
             return false;
 
-        }else if(contact_email != '' && !validateEmail(contact_email)) {
-            $("#emailErr").addClass('error').html('Please enter valid email');
+        }else if(email == '') {
+            $("#emailErr").addClass('error').html('Please enter driver email');
             $("#email").focus();
             return false;
 
-        }else if(contact_phone == '') {
-            $("#emailErr").addClass('error').html('Please enter contact phonenumber');
-            $("#contact_phone").focus();
+        }else if(email != '' && !validateEmail(email)) {
+            $("#emailErr").addClass('error').html('Please enter valid email');
+            $("#email").focus();
             return false;
 
         }else if(address == '') {
             $("#addressErr").addClass('error').html('Please enter driver address');
             $("#address").focus();
             return false;
+
+        }else if(phone_number == '') {
+            $("#phoneErr").addClass('error').html('Please enter driver phone number');
+            $("#phone_number").focus();
+            return false;
+
         }else {
-            document.siteForm.submit();
+
+            $.ajax({
+                type   : 'POST',
+                url    : baseUrl+'drivers/checkDriver',
+                data   : {phone_number:phone_number,id:editId},
+                success: function(data){
+                    if($.trim(data) == 'false') {
+                        $("#phoneErr").addClass('error').html('Phone number already exists');
+                        $("#phone_number").focus();
+                        return false;
+                    }else {
+                        document.DrvierForm.submit();
+                        return false;
+                    }
+                }
+            });
             return false;
         }
-        return false;
     }
 
     function validateEmail(sEmail) {

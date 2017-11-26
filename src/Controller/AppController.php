@@ -43,7 +43,7 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        //$this->loadComponent('Auth');
+        $this->loadComponent('Auth');
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -51,6 +51,11 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
+
+        if(!empty($this->Auth->user()))
+            $this->set('logginUser', $this->Auth->user());
+        else
+            $this->set('logginUser', '');
 
         $controller = $this->request->getParam('controller');
         $action     = $this->request->getParam('action');

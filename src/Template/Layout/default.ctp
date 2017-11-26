@@ -21,20 +21,24 @@
 </head>
 <body  data-spy="scroll" data-target="#myScrollspy" data-offset="50">
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="<?php echo DISPATCH_URL ?>img/sidebar-1.jpg">
+    <div class="<?php echo (!empty($logginUser)) ? 'sidebar' : '' ?>" data-color="purple" data-image="<?php echo DISPATCH_URL ?>img/sidebar-1.jpg">
         <!--
     Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
     Tip 2: you can also add an image using data-image tag
 -->
-        <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
-                Creative Tim
-            </a>
-        </div>
+        <?php if(!empty($logginUser)) { ?>
+            <div class="logo">
+                <a href="<?php echo DISPATCH_URL ?>" class="simple-text">
+                    Dispatch
+                </a>
+            </div>
+        <?php } ?>
 
         <?php
-        echo $this->element('leftside');
+        if(!empty($logginUser)) {
+            echo $this->element('leftside');
+        }
         ?>
 
     </div>

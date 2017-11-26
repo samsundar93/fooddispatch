@@ -1,15 +1,6 @@
 <div class="main-panel">
         <nav class="navbar navbar-transparent navbar-absolute">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"> Dashboard </a>
-                </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -31,15 +22,14 @@
                                 <i class="material-icons">content_copy</i>
                             </div>
                             <div class="card-content">
-                                <p class="category">Used Space</p>
-                                <h3 class="title">49/50
-                                    <small>GB</small>
+                                <p class="category">Total Orders</p>
+                                <h3 class="title"><?php echo $ordersCount; ?>
                                 </h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
-                                    <i class="material-icons text-danger">warning</i>
-                                    <a href="#pablo">Get More Space...</a>
+                                    <i class="material-icons text-success">warning</i>
+                                    <a href="<?php echo DISPATCH_URL ?>orders">Go to Order</a>
                                 </div>
                             </div>
                         </div>
@@ -50,12 +40,13 @@
                                 <i class="material-icons">store</i>
                             </div>
                             <div class="card-content">
-                                <p class="category">Revenue</p>
-                                <h3 class="title">$34,245</h3>
+                                <p class="category">Total Drivers</p>
+                                <h3 class="title"><?php echo $driversCount; ?></h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
-                                    <i class="material-icons">date_range</i> Last 24 Hours
+                                    <i class="material-icons text-success">warning</i>
+                                    <a href="<?php echo DISPATCH_URL ?>drivers">Go to Driver</a>
                                 </div>
                             </div>
                         </div>
@@ -66,12 +57,12 @@
                                 <i class="material-icons">info_outline</i>
                             </div>
                             <div class="card-content">
-                                <p class="category">Fixed Issues</p>
-                                <h3 class="title">75</h3>
+                                <p class="category">Processing</p>
+                                <h3 class="title"><?php echo $processingOrdersCount; ?></h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
-                                    <i class="material-icons">local_offer</i> Tracked from Github
+                                    <i class="material-icons">local_offer</i> On The Way to Customer
                                 </div>
                             </div>
                         </div>
@@ -79,15 +70,16 @@
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-stats">
                             <div class="card-header" data-background-color="blue">
-                                <i class="fa fa-twitter"></i>
+                                <i class="material-icons">done</i>
                             </div>
                             <div class="card-content">
-                                <p class="category">Followers</p>
-                                <h3 class="title">+245</h3>
+                                <p class="category">Completed</p>
+                                <h3 class="title"><?php echo $completedOrdersCount; ?></h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
-                                    <i class="material-icons">update</i> Just Updated
+                                    <i class="material-icons text-success">warning</i>
+                                    <a href="<?php echo DISPATCH_URL ?>orders">Go to Report</a>
                                 </div>
                             </div>
                         </div>
